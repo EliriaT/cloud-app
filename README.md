@@ -81,3 +81,4 @@ Just useful commands
    - `minikube start`
    - `minikube stop`
    - `kubectl rollout history deployment cloud-app-deployment`
+   - `kubectl top pod`

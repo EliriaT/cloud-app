@@ -38,12 +38,15 @@ jobs:
         run: |
           minikube status || minikube start --driver=docker
 
+      - name: Enable metrics-server in Minikube
+        run: minikube addons enable metrics-server
+
       - name: Set Docker image in deployment.yaml
         run: |
           sed -i "s|image:.*|image: ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:${{ github.sha }}|" k8s/deployment.yaml
 
-      - name: Apply deployment
-        run: kubectl apply -f k8s/deployment.yaml
+      - name: Apply configurations
+        run: kubectl apply -f k8s/
 
       - name: Wait for rolling update to complete
         run: |
