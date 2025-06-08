@@ -51,18 +51,22 @@ java -jar ./build/libs/tech-challenge-0.0.1-SNAPSHOT.jar
 3. Push do docker hub registry:
 
    `docker push eliriat/cloud-app:tagname`
-4. Applying the Kubernetes deployment configuration:
+4. Setting up Minikube:
+
+   `minikube start`
+5. Applying the Kubernetes deployment configuration:
 
    `kubectl apply -f k8s/deployment.yaml`
-5. Applying the Kubernetes service configuration:
+6. Applying the Kubernetes service configuration:
 
    `kubectl apply -f k8s/service.yaml`
-6. Rolling update the deployment:
+7. Rolling update the deployment:
 
-   `kubectl set image deployment/cloud-app cloud-app=eliriat/cloud-app:newtag`
+   `kubectl set image deployment cloud-app-deployment cloud-app-pod=eliriat/cloud-app:test`
 
 Just useful commands
 
+   - ` ./run.sh`
    - `kubectl describe pod/service {name}`
    - `kubectl get pods/deployments/services/nodes -o wide --watch`
    - `kubectl get all`
@@ -73,5 +77,5 @@ Just useful commands
    - `kubectl get replicaset`
    - `kubectl delete -f {file-name}`
    - `minikube service cloud-app-service`
-   - `kubectl create namespace {namespace-name}`
-     minikube addons enable ingress
+   - `kubectl create namespace {namespace-name}
+   - `minikube start`

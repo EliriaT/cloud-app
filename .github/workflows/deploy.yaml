@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  deploy:
-    runs-on: self-hosted
+  build:
+    runs-on: ubuntu-latest
     environment: Test
 
     steps:
@@ -22,5 +22,28 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:latest .
-          docker push ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:latest
+          docker build -t ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:${{ github.sha }} .
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:${{ github.sha }}
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    environment: Test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start Minikube
+        run: |
+          minikube status || minikube start --driver=docker
+
+      - name: Set Docker image in deployment.yaml
+        run: |
+          sed -i "s|image:.*|image: ${{ vars.DOCKERHUB_USERNAME }}/cloud-app:${{ github.sha }}|" k8s/deployment.yaml
+
+      - name: Apply deployment
+        run: kubectl apply -f k8s/deployment.yaml
+
+      - name: Wait for rolling update to complete
+        run: kubectl rollout status deployment/cloud-app
