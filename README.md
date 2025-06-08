@@ -77,5 +77,5 @@ Just useful commands
    - `kubectl get replicaset`
    - `kubectl delete -f {file-name}`
    - `minikube service cloud-app-service`
-   - `kubectl create namespace {namespace-name}
+   - `kubectl create namespace {namespace-name}`
    - `minikube start`

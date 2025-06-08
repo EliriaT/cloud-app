@@ -46,4 +46,14 @@ jobs:
         run: kubectl apply -f k8s/deployment.yaml
 
       - name: Wait for rolling update to complete
-        run: kubectl rollout status deployment cloud-app-deployment
+        run: |
+          set -e
+          if ! kubectl rollout status deployment invalid-name --timeout=60s; then
+            echo "ROLLBACK_NEEDED=true" >> $GITHUB_ENV
+          fi
+
+      - name: Rollback if needed
+        if: env.ROLLBACK_NEEDED == 'true'
+        run: |
+          echo "Rolling back due to failed rollout..."
+          kubectl rollout undo deployment cloud-app-deployment
