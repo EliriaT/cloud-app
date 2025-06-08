@@ -79,3 +79,5 @@ Just useful commands
    - `minikube service cloud-app-service`
    - `kubectl create namespace {namespace-name}`
    - `minikube start`
+   - `minikube stop`
+   - `kubectl rollout history deployment cloud-app-deployment`
