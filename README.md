@@ -39,3 +39,39 @@ java -jar ./build/libs/tech-challenge-0.0.1-SNAPSHOT.jar
 2. Application should be able to send metrics to a monitoring system.
 3. Database should be running on a separate container.
 4. Storage should be mounted to the database container.
+
+### Commands
+
+1. Building the docker image:
+
+   `docker build -t cloud-app .`
+2. Running the container:
+
+   `docker run -it -p 8080:8080 cloud-app`
+3. Push do docker hub registry:
+
+   `docker push eliriat/cloud-app:tagname`
+4. Applying the Kubernetes deployment configuration:
+
+   `kubectl apply -f k8s/deployment.yaml`
+5. Applying the Kubernetes service configuration:
+
+   `kubectl apply -f k8s/service.yaml`
+6. Rolling update the deployment:
+
+   `kubectl set image deployment/cloud-app cloud-app=eliriat/cloud-app:newtag`
+
+Just useful commands
+
+   - `kubectl describe pod/service {name}`
+   - `kubectl get pods/deployments/services/nodes -o wide --watch`
+   - `kubectl get all`
+   - `kubectl logs {pod-name}`
+   - `kubectl exec -it {pod-name} -- /bin/sh`
+   - `kubectl delete deployment {deployment-name}`
+   - `kubectl delete -f {file-name}`
+   - `kubectl get replicaset`
+   - `kubectl delete -f {file-name}`
+   - `minikube service cloud-app-service`
+   - `kubectl create namespace {namespace-name}`
+     minikube addons enable ingress
