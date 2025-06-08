@@ -46,4 +46,4 @@ jobs:
         run: kubectl apply -f k8s/deployment.yaml
 
       - name: Wait for rolling update to complete
-        run: kubectl rollout status deployment/cloud-app
+        run: kubectl rollout status deployment cloud-app-deployment
