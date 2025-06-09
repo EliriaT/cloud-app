@@ -15,6 +15,6 @@ class MainController {
         val hostname = InetAddress.getLocalHost().hostName
 
         logger.info("Request received on host: {}", hostname)
-        return "Hello World! Host: $hostname. Good night."
+        return "Hello World! Host: $hostname. Good night. 09.06.2025"
     }
 }
